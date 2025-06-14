@@ -9,8 +9,14 @@ def home():
 @app.route("/api", methods=["GET", "POST"])
 def qa():
     if request.method == "POST":
-        data = {"result": "Shoaib is Here!"}
-        return jsonify(data)
+        data = request.get_json()
+        question = data.get('question', '')
+        # Here you can process the question and generate a response
+        response = f"You asked: {question}. This is a sample response from Shoaib's AI!"
+        return jsonify({"result": response})
+    
     data = {"result": "Shoaib is Here!"}
     return jsonify(data)
-app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True, host='0.0.0.0', port=5000)
